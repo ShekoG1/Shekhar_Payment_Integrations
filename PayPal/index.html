@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <!-- Link Must be in format:
+        src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&EXTRA_OPTIONS"
+  -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AZFXgp4g8JDBHByhdPyMRPxng6TeueVvrPu9bgrcJtxyM8Rnn4Hi7Xn_FaadUFwAs3Mryx_s7WkBgBVV&disable-funding=credit,card&vault=true&intent=subscription"></script>
+    <!-- Add your client_id -->
+
+    <!-- CANCELLATION -->
+    <form action="cancel.php">
+        <h4>Cancel your subscription</h4>
+        <label for="subscriptionID">Please enter a valid subscription id</label>
+        <input type="text" name="subscriptionId" id="subscriptionID">
+        <input type="submit">
+    </form>
+    <!-- END -->
+
+        <!-- CHECK STATUS -->
+        <form action="checkStatus.php">
+          <h4>Check status of your subscription</h4>
+          <label for="ChecksubscriptionID">Please enter a valid subscription id</label>
+          <input type="text" name="ChecksubscriptionId" id="ChecksubscriptionID">
+          <input type="submit">
+      </form>
+      <!-- END -->
+      <br/>
+      <!-- PAY -->
+      <div id="paypal-button-container"></div>
+      <!-- END -->
+
+      <script>
+        paypal.Buttons({
+          createSubscription: function(data, actions) {
+            return actions.subscription.create({
+              'plan_id': 'P-7B142120LJ2006514MHPLW3Q' // Creates the subscription
+            });
+          },
+          onApprove: function(data, actions) {
+             // Optional message given to subscriber
+            window.location = "success.html #"+data.subscriptionID;
+          },
+          onError: function (err) {
+          // Show an error page here, when an error occurs
+          console.log(err);
+          }
+        }).render('#paypal-button-container'); // Renders the PayPal button
+    </script>
+</body>
+<!-- 
+  Plan Ids:
+
+  * P-1BE17355M73186114MHP5ZVA | Full Access        @ $29
+  * P-3H4949832A526714KMHP52GI | Life Time Access   @ $99
+  * P-9HS219719L9543326MHP52UI | School Pals        @ $249
+
+  Dummy Account1:
+  sb-lj1d38887628@personal.example.com
+  sGF1c.P" 
+
+  Dummy Account2:
+  sb-dqujc8948861@business.example.com
+  H,h9t%Nq
+
+  Store acc
+  sb-c2mgd8894954@business.example.com
+  |Fw<^X7q
+
+-->
+
+<!--   
+  Customize the button:
+  paypal.Buttons({
+      style: {
+          shape: 'rect',
+          color: 'gold',
+          layout: 'vertical',
+          label: 'subscribe'
+      } -->
+</html>
